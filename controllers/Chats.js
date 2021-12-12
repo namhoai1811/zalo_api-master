@@ -89,7 +89,7 @@ chatController.getMessages = async (req, res, next) => {
         let messages = await MessagesModel.find({
             chat: req.params.chatId
         }).populate('user');
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        return res.status(httpStatus.OK).json({
             data: messages
         });
     } catch (e) {
@@ -103,7 +103,7 @@ chatController.getMessages = async (req, res, next) => {
 chatController.getListChats = async (req, res, next) => {
     try {
         let allChats = await ChatModel.find().populate('user');
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        return res.status(httpStatus.OK).json({
             data: allChats
         });
     } catch (e) {
