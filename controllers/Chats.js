@@ -99,9 +99,10 @@ chatController.getMessages = async (req, res, next) => {
     }
 }
 
-chatController.getAllChats = async (req, res, next) => {
+// api lay list chat
+chatController.getListChats = async (req, res, next) => {
     try {
-        let allChats = await MessagesModel.find().populate('user');
+        let allChats = await ChatModel.find().populate('user');
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             data: allChats
         });
