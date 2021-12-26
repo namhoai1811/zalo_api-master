@@ -12,7 +12,7 @@ chatsRoutes.post(
 
 chatsRoutes.get(
     "/getMessages/:chatId",
-    // auth,
+    auth,
     asyncWrapper(chatController.getMessages),
 );
 

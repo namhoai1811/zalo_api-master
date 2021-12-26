@@ -193,5 +193,35 @@ friendsController.listFriends = async (req, res, next) => {
     }
 }
 
+// hoanganh api 
+
+friendsController.searchPhone = async (req, res, next) => {
+    try {
+        // let phone = req.body.phone;
+        let phone = '0000000015';
+
+        let users = await UserModel.find({
+            phonenumber: `${phone}`
+        }).select('username').populate('avatar').populate('cover_image').exec();
+        console.log(users);
+
+        res.status(200).json({
+            code: 200,
+            message: "Danh sách User",
+            data: {
+                friends: users,
+             }
+        });
+     
+
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+}
+
+
+
 
 module.exports = friendsController;

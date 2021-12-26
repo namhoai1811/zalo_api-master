@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const {
     PRIVATE_CHAT,
     GROUP_CHAT,
@@ -6,6 +7,7 @@ const ChatModel = require("../models/Chats");
 const MessagesModel = require("../models/Messages");
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
+const mongoose = require("mongoose");
 
 chatController.send = async (req, res, next) => {
     try {
@@ -99,13 +101,28 @@ chatController.getMessages = async (req, res, next) => {
     }
 }
 
-// api lay list chat
+// Nam api lay list chat
 chatController.getListChats = async (req, res, next) => {
+
+    // let userId = req.userId;
+    let userId  = '61ad6196e926402552365c13';
+    console.log(userId);
+
     try {
-        let allChats = await ChatModel.find().populate('user');
+
+        // let allChats = await ChatModel.find({}).populate('user');
+        let allChats = await ChatModel.find({
+            // _id: "61909014b60fd124c6b03120" 
+           
+             // member: { $all: "61b2d117283bd430b81e71e4"} 
+              member: { $all: `${userId}`} 
+            
+        });
+        console.log(allChats);
         return res.status(httpStatus.OK).json({
             data: allChats
         });
+
     } catch (e) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             message: e.message
