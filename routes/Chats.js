@@ -6,7 +6,7 @@ const auth = require("../middlewares/auth");
 
 chatsRoutes.post(
     "/send",
-    // auth,
+    auth,
     asyncWrapper(chatController.send),
 );
 
@@ -19,7 +19,7 @@ chatsRoutes.get(
 // api lay danh sach chat
 chatsRoutes.get(
     "/getListChats",
-    // auth,
+    auth,
     asyncWrapper(chatController.getListChats),
 );
 

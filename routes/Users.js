@@ -25,13 +25,13 @@ usersRoutes.post(
 );
 usersRoutes.get(
     "/show",
-    // auth,
+    auth,
     asyncWrapper(usersController.show),
 );
 
 usersRoutes.get(
     "/show/:id",
-    // auth,
+    auth,
     asyncWrapper(usersController.show),
 );
 
