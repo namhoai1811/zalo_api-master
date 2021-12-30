@@ -1,4 +1,3 @@
-const { ObjectID } = require('mongodb');
 const {
     PRIVATE_CHAT,
     GROUP_CHAT,
@@ -7,12 +6,11 @@ const ChatModel = require("../models/Chats");
 const MessagesModel = require("../models/Messages");
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
-const mongoose = require("mongoose");
 
 chatController.send = async (req, res, next) => {
     try {
         let userId = req.userId;
-        console.log(userId);
+
         const {
             name,
             chatId,
@@ -21,8 +19,6 @@ chatController.send = async (req, res, next) => {
             type,
             content
         } = req.body;
-        // console.log(req.body);
-    
 
         let chatIdSend = null;
         let chat;
@@ -114,14 +110,33 @@ chatController.getListChats = async (req, res, next) => {
     try {
 
         let allChats = await ChatModel.find({
-
               member: { $all: `${userId}`} 
-            
         });
         
         return res.status(httpStatus.OK).json({
             data: allChats,
     
+        });
+
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+
+        });
+    }
+
+}
+
+chatController.deleteMessage = async (req, res, next) => {
+
+    let userId = req.userId;
+
+    try {
+        console.log(req.params.messageId);
+        await MessagesModel.deleteOne({ _id: req.params.messageId });
+   
+        return res.status(httpStatus.OK).json({
+            message: 'Đã xóa thành công'
         });
 
     } catch (e) {
