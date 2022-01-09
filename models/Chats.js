@@ -23,6 +23,10 @@ const chatsSchema = new mongoose.Schema({
         ],
         required: false,
         default: PRIVATE_CHAT
+    },
+    content: {
+        type: String,
+        required: false
     }
 });
 chatsSchema.set('timestamps', true);

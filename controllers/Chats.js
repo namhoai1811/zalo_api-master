@@ -49,6 +49,10 @@ chatController.send = async (req, res, next) => {
           content: content,
         });
         await message.save();
+
+        chat.content = content;
+        await chat.save();
+
         let messageNew = await MessagesModel.findById(message._id)
           .populate("chat")
           .populate("user");
@@ -97,6 +101,7 @@ chatController.getListChats = async (req, res, next) => {
     let allChats = await ChatModel.find({
       member: { $all: `${userId}` },
     });
+  
 
     return res.status(httpStatus.OK).json({
       data: allChats,
@@ -141,14 +146,13 @@ chatController.deleteChat = async (req, res, next) => {
 chatController.checkChat = async (req, res, next) => {
   let userId = req.userId;
   let userFriend = req.params.userId;
-//   userFriend = '618e975874550a22a4cb2a90';
+  //   userFriend = '618e975874550a22a4cb2a90';
 
   try {
-   
     let allChats = await ChatModel.findOne({
       member: { $all: [`${userFriend}`, `${userId}`] },
     });
-    console.log('ga',allChats);
+    console.log("ga", allChats);
 
     return res.status(httpStatus.OK).json({
       data: allChats,
