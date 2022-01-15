@@ -34,7 +34,17 @@ usersRoutes.get(
     auth,
     asyncWrapper(usersController.show),
 );
-
+// 
+usersRoutes.get(
+    "/list-block/",
+    auth,
+    asyncWrapper(usersController.listBlock),
+);
+usersRoutes.get(
+    "/list-block/:userId",
+    auth,
+    asyncWrapper(usersController.listBlock),
+);
 
 usersRoutes.post("/set-block-user", auth, usersController.setBlock);
 usersRoutes.post("/set-block-diary", auth, usersController.setBlockDiary);

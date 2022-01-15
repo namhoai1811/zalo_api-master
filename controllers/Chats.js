@@ -152,7 +152,7 @@ chatController.checkChat = async (req, res, next) => {
     let allChats = await ChatModel.findOne({
       member: { $all: [`${userFriend}`, `${userId}`] },
     });
-    console.log("ga", allChats);
+    // console.log("ga", allChats);
 
     return res.status(httpStatus.OK).json({
       data: allChats,
